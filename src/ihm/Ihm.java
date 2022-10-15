@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Ihm extends JFrame implements ActionListener {
 
@@ -67,6 +69,15 @@ public class Ihm extends JFrame implements ActionListener {
                 moyenneField.setText(stats.calculMoyenne(data.attributlist.get(indeex)));
                 medianeField.setText(stats.calculMedianne((data.attributlist.get(indeex))));
                 modeField.setText(stats.calculMode(data.attributlist.get(indeex)).toString());
+                List<String> mesures = stats.calculMesuresDispersion(data.attributlist.get(indeex));
+                maxField.setText(mesures.get(0));
+                minField.setText(mesures.get(1));
+                q1Field.setText(mesures.get(2));
+                q2Field.setText(mesures.get(3));
+                q3Field.setText(mesures.get(4));
+
+                outliersField.setText(mesures.get(5));
+
             }
         });
     }

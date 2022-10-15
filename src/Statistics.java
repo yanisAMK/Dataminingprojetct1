@@ -151,21 +151,17 @@ public class Statistics {
         return min[0];
     }
 
-    public void calculMesuresDispersion(List<String> paramlist){
+    public List<String> calculMesuresDispersion(List<String> paramlist){
         List<String> quartiles = quartile(paramlist);
-        System.out.println("");
 
         double max = getmax(paramlist);
         double min = getmin(paramlist);
-        System.out.println("max : " + max + " min : " + min);
+
 
         double IQR = (Double.parseDouble(quartiles.get(2)) - Double.parseDouble(quartiles.get(0)));
         double linesup = Double.parseDouble(quartiles.get(2)) + IQR*1.5;
         double lineinf = Double.parseDouble(quartiles.get(0)) - IQR*1.5;
-        quartiles.forEach(q ->{
-            System.out.println("quartile "+ quartiles.indexOf(q) + " : " + q);
-        });
-        System.out.println("lineinf : " + lineinf + " linesup : " + linesup);
+
 
         List<Double> outliers = new ArrayList<>();
         paramlist.forEach(s ->{
@@ -176,11 +172,19 @@ public class Statistics {
                 outliers.add(Double.parseDouble(s));
             }
         });
-        System.out.println("outliers");
-        outliers.forEach(o->{
-            System.out.print(o + " || ");
-        });
+        List<String> mesures = new ArrayList<>();
+        mesures.add(max+"");
+        mesures.add(min+"");
+        mesures.add(quartiles.get(0));
+        mesures.add(quartiles.get(1));
+        mesures.add(quartiles.get(2));
+        mesures.add(linesup+" < outliers || outliers < "+lineinf);
+        /*outliers.forEach(o ->{
+            mesures.add(o+"");
+        });*/
+        return mesures;
     }
+
     public void calculMesuresDispersionAll(List<List<String>> paramlist){
         paramlist.forEach(attribute ->{
             if(checktype(attribute)) {

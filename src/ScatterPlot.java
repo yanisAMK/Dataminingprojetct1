@@ -48,8 +48,6 @@ public class ScatterPlot {
 
     public void renderplot (JFreeChart scatterplot){
         XYPlot plot = (XYPlot) scatterplot.getPlot();
-        ValueAxis axisx = plot.getDomainAxis();
-        ValueAxis axisy = plot.getRangeAxis();
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         plot.setRenderer(renderer);
     }

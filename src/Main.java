@@ -13,6 +13,7 @@ public class Main {
         System.out.println("----Valeurs Tries par ordre croissant----");
         //a.calculTendanceCentraleAll(data.attributlist);
 
+
         //a.calculMesuresDispersion(data.attributlist.get(9));
         stats.calculMesuresDispersionAll(data.attributlist);
 

@@ -13,7 +13,7 @@ public class Data {
     //Contient les données brut
     public List<List<String>> dataSet = new ArrayList<>();
     //Contient les attributs dans l'ordre initial
-    List<List<String>> unsortedAttributes = new ArrayList<>();
+    public List<List<String>> unsortedAttributes = new ArrayList<>();
     
     //Contient les attributs triée , par colones
     public  List<List<String>> attributlist = new ArrayList<>();

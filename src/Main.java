@@ -20,6 +20,7 @@ public class Main {
 
 
         WhiskersPlot whiskerplot = new WhiskersPlot();
+
         whiskerplot.generatewhiskerplot(data.attributlist.get(18), data.attributnames.get(18));
 
         HistogrammsPlot histogramplot = new HistogrammsPlot();

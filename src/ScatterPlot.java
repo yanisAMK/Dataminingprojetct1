@@ -37,7 +37,7 @@ public class ScatterPlot {
 
     public void createframe(JFreeChart scatterplot){
         ChartPanel panel = new ChartPanel(scatterplot);
-        panel.setPreferredSize(new Dimension(640, 480));
+        panel.setPreferredSize(new Dimension(300, 300));
         JFrame frame = new JFrame();
         frame.add(panel);
         frame.pack();
@@ -52,7 +52,7 @@ public class ScatterPlot {
         plot.setRenderer(renderer);
     }
 
-    public void generatehistogramplot(List<String> attributelist1,List<String> attributelist2, String attributename1,String attributename2){
+    public void generateScatterPlot(List<String> attributelist1,List<String> attributelist2, String attributename1,String attributename2){
 
         XYSeriesCollection scatterdataset  = createscatterdataset(attributelist1,attributelist2,attributename1,attributename2);
         JFreeChart scatterchart = createscatterplot(scatterdataset,attributename1,attributename2);

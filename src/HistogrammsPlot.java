@@ -38,7 +38,7 @@ public class HistogrammsPlot {
 
     public void createframe(JFreeChart histogram){
         ChartPanel panel = new ChartPanel(histogram);
-        panel.setPreferredSize(new Dimension(640, 480));
+        panel.setPreferredSize(new Dimension(300, 300));
         JFrame frame = new JFrame();
         frame.add(panel);
         frame.pack();

@@ -39,15 +39,15 @@ public class WhiskersPlot {
         return chart;
     }
 
-    public void creatpanel(JFreeChart chart){
+    public ChartPanel creatpanel(JFreeChart chart){
         ChartPanel chartpanel = new ChartPanel(chart);
-        chartpanel.setPreferredSize(new Dimension(640, 480));
+        chartpanel.setPreferredSize(new Dimension(300, 300));
         JFrame frame = new JFrame();
         frame.add(chartpanel);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
+        return chartpanel;
     }
 
     public void ploltbox(JFreeChart boxplot){

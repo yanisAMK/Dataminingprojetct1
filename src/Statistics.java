@@ -1,57 +1,11 @@
+package src;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class Analyser {
+public class Statistics {
 
-    public void triedata(List<List<String>> dataset, List<List<String>> attributes){
-        List<List<String>> paramlist = new ArrayList<>();
 
-        for (int i = 0; i < dataset.get(0).size(); i++) {
-            paramlist.add(new ArrayList<>());
-        }
-
-        dataset.forEach((line) -> {
-            for (int i = 0; i < line.size(); i++) {
-                paramlist.get(i).add(line.get(i));
-            }
-        });
-
-        for (List<String> strings : paramlist) {
-            if (checktype(strings)) {
-                List<Double> dline = new ArrayList<>();
-                List<String> sline = new ArrayList<>();
-
-                strings.forEach(s -> {
-                    if(!Objects.equals(s, " ")){
-                        dline.add(Double.parseDouble(s));
-                    }
-                    /*else {
-                        dline.add((double) -1);
-                    }*/
-                });
-                Collections.sort(dline);
-                dline.forEach(val -> {
-                    if (val != -1) {
-                        sline.add(val + "");
-                    }
-                    /*else {
-                        sline.add(" ");
-                    }*/
-                });
-
-                attributes.add(sline);
-            } else {
-                Collections.sort(strings);
-                List<String> clean = new ArrayList<>();
-                strings.forEach(s ->{
-                    if(!Objects.equals(s, " ")){
-                        clean.add(s);
-                    }
-                });
-                attributes.add(clean);
-            }
-        }
-    }
     public boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
@@ -145,14 +99,14 @@ public class Analyser {
         });
         return modes;
     }
-    public String symetrie(){
-        return "symetrie";
-    }
+
+
     public void calculTendanceCentrale(List<String> paramlist){
         System.out.println("moyenne " + calculMoyenne(paramlist));
         System.out.println("medianne " + calculMedianne(paramlist));
         System.out.println("mode " + calculMode(paramlist));
-        System.out.println(symetrie());
+        System.out.println(calculSymetrie());
+
     }
     public void calculTendanceCentraleAll (List<List<String>> paramlists){
         AtomicInteger i = new AtomicInteger();
@@ -163,6 +117,8 @@ public class Analyser {
             System.out.println("mode " + calculMode(paramlist));
             i.addAndGet(1);
         });
+
+
     }
 
     //Calcul des mesures de dispersion
@@ -232,6 +188,20 @@ public class Analyser {
                 calculMesuresDispersion(attribute);
             }
         });
+    }
+
+    public String calculSymetrie(){
+        //todo
+        return "symetrie";
+    }
+    public Double calculVariance(){
+        //todo
+        return 0.;
+    }
+
+    public Double calculCorrelation(){
+        //todo
+        return 0.;
     }
 
 }

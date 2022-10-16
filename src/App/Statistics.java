@@ -194,16 +194,13 @@ public class Statistics {
         });
     }
 
-    public String calculSymetrie(){
-        //todo
-        return "symetrie";
-    }
+
     public Double calculVariance(){
         //todo
         return 0.;
     }
 
-    public Double calculCorrelation(){
+    public Double calculEcartType(){
         //todo
         return 0.;
     }

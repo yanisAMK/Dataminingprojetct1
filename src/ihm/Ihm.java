@@ -4,10 +4,7 @@ import src.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.util.List;
 
@@ -36,6 +33,7 @@ public class Ihm extends JFrame implements ActionListener {
     private JComboBox<String> comboBox4;
     private JComboBox<String> comboBox5;
     private JButton scatterPlotButton;
+    private JTable table1;
     int indexTendances;
     public Ihm(){
         Data data = new Data();
@@ -69,9 +67,11 @@ public class Ihm extends JFrame implements ActionListener {
             public void mouseClicked(MouseEvent e) {
                 indexTendances = comboBox3.getSelectedIndex();
                 data.triedata(data.dataSet);
+                data.attributnames.forEach(System.out::print);
                 moyenneField.setText(stats.calculMoyenne(data.attributlist.get(indexTendances)));
                 medianeField.setText(stats.calculMedianne((data.attributlist.get(indexTendances))));
                 modeField.setText(stats.calculMode(data.attributlist.get(indexTendances)).toString());
+
                 List<String> mesures = stats.calculMesuresDispersion(data.attributlist.get(indexTendances));
                 maxField.setText(mesures.get(0));
                 minField.setText(mesures.get(1));
@@ -104,7 +104,22 @@ public class Ihm extends JFrame implements ActionListener {
                 int index1 = comboBox4.getSelectedIndex();
                 int index2 = comboBox5.getSelectedIndex();
                 ScatterPlot scater = new ScatterPlot();
-                scater.generateScatterPlot(data.unsortedAttributes.get(index1),data.unsortedAttributes.get(index2), data.attributnames.get(index1), data.attributnames.get(index2));
+                scater.generateScatterPlot(data.unsortedAttributes.get(index1),data.unsortedAttributes.get(index2),
+                        data.attributnames.get(index1), data.attributnames.get(index2));
+            }
+        });
+        whiskersBoxButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                WhiskersPlot whiskers = new WhiskersPlot();
+                whiskers.generatewhiskerplot(data.attributlist.get(indexTendances),data.attributnames.get(indexTendances));
+            }
+        });
+        histogrammPlotButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                HistogrammsPlot histogramm = new HistogrammsPlot();
+                histogramm.generatehistogramplot(data.attributlist.get(indexTendances), data.attributnames.get(indexTendances));
             }
         });
     }

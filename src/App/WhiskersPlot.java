@@ -1,4 +1,4 @@
-package src;
+package src.App;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -63,10 +63,8 @@ public class WhiskersPlot {
     }
 
     public void generatewhiskerplot(List<String> attribute, String attributename){
-
         BoxAndWhiskerXYDataset dataset = towhiskerdata(attribute, attributename);
         JFreeChart chart = createchart(dataset);
-
         creatpanel(chart);
         ploltbox(chart);
     }

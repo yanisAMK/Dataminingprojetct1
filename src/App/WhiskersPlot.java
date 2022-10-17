@@ -1,4 +1,4 @@
-package src.App;
+package src.app;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -68,9 +68,6 @@ public class WhiskersPlot {
         creatpanel(chart);
         ploltbox(chart);
     }
-
-
-
 
 
 }

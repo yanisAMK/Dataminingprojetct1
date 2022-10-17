@@ -1,4 +1,4 @@
-package src.App;
+package src.app;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,7 +47,7 @@ public class Statistics {
             if (isNumeric(val)) {
                 moyenne += Float.parseFloat(val);
             }else {
-                return "string attribute";
+                return "None";
             }
         }
         return "" + moyenne/paramlist.size();
@@ -56,14 +56,17 @@ public class Statistics {
     public String calculMedianne(List<String> paramlist){
         int length = paramlist.size();
         if (length%2 != 0){
-            return paramlist.get((length+1)/2);
+            if(isNumeric(paramlist.get((length+1)/2))){
+                return paramlist.get((length+1)/2);
+            }
+            return "None";
         }
         if (checktype(paramlist)) {
             Float v1 = Float.parseFloat(paramlist.get(length/2));
             Float v2 = Float.parseFloat(paramlist.get((length +1)/2));
             return "" +(v2+v1)/2;
         }
-        return paramlist.get(length/2);
+        return "None";
 
     }
     public List<String> calculMode(List<String> paramlist){
@@ -105,7 +108,6 @@ public class Statistics {
         System.out.println("moyenne " + calculMoyenne(paramlist));
         System.out.println("medianne " + calculMedianne(paramlist));
         System.out.println("mode " + calculMode(paramlist));
-        System.out.println(calculSymetrie());
 
     }
     public void calculTendanceCentraleAll (List<List<String>> paramlists){

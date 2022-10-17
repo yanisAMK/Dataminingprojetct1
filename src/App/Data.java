@@ -1,9 +1,10 @@
-package src.App;
+package src.app;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import src.app.Statistics;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -72,7 +73,7 @@ public class Data {
         }
     }
 
-    public List<List<String>> reaData(String filepath){
+    public void reaData(String filepath){
         try {
             FileInputStream file = new FileInputStream(
                     new File(filepath)
@@ -108,7 +109,8 @@ public class Data {
         catch (Exception e){
             e.printStackTrace();
         }
-        return dataSet;
+        triedata(dataSet);
+
     }
 
 }

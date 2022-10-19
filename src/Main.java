@@ -14,7 +14,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("src/views/Maininterface.fxml")));
         stage.setTitle("Data Mining Project Part 1");
         Scene scene = new Scene(root);
@@ -35,4 +34,3 @@ public class Main extends Application {
 //todo fix interface
 //todo affichree la varance
 //todo afficher les valeurs vides
-//todo afficher les valeurs avc 1470 modes

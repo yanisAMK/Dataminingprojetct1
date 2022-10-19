@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Statistics {
 
-
+    public HashMap<String, String> mesures = new HashMap<>();
     public boolean isNumeric(String str) {
         try {
             Double.parseDouble(str);
@@ -100,14 +100,22 @@ public class Statistics {
         maxindex.forEach(i ->{
             modes.add(distinctparams.get(i));
         });
+
+        if(modes.size() == paramlist.size()){
+            List<String>mode = new ArrayList<>();
+            mode.add("All values are unique");
+            return mode;
+        }
+
         return modes;
     }
 
 
     public void calculTendanceCentrale(List<String> paramlist){
-        System.out.println("moyenne " + calculMoyenne(paramlist));
-        System.out.println("medianne " + calculMedianne(paramlist));
-        System.out.println("mode " + calculMode(paramlist));
+
+        mesures.put("moyenne" ,calculMoyenne(paramlist));
+        mesures.put("mediane" ,calculMedianne(paramlist));
+        mesures.put("mode" , ""+calculMode(paramlist));
 
     }
     public void calculTendanceCentraleAll (List<List<String>> paramlists){
@@ -153,13 +161,12 @@ public class Statistics {
         return min[0];
     }
 
-    public List<String> calculMesuresDispersion(List<String> paramlist){
+    public void calculMesuresDispersion(List<String> paramlist){
+
         List<String> quartiles = quartile(paramlist);
 
         double max = getmax(paramlist);
         double min = getmin(paramlist);
-
-
         double IQR = (Double.parseDouble(quartiles.get(2)) - Double.parseDouble(quartiles.get(0)));
         double linesup = Double.parseDouble(quartiles.get(2)) + IQR*1.5;
         double lineinf = Double.parseDouble(quartiles.get(0)) - IQR*1.5;
@@ -174,17 +181,21 @@ public class Statistics {
                 outliers.add(Double.parseDouble(s));
             }
         });
-        List<String> mesures = new ArrayList<>();
-        mesures.add(max+"");
-        mesures.add(min+"");
-        mesures.add(quartiles.get(0));
-        mesures.add(quartiles.get(1));
-        mesures.add(quartiles.get(2));
-        mesures.add(linesup+" < outliers || outliers < "+lineinf);
+
+
+        mesures.put("max",max+"");
+        mesures.put("min",min+"");
+        mesures.put("q1",quartiles.get(0));
+        mesures.put("q2",quartiles.get(1));
+        mesures.put("q3",quartiles.get(2));
+        mesures.put("iqr",IQR + "");
+        mesures.put("nbOutliers", outliers.size()+"");
+
+        //mesures.add(linesup +" < outliers || outliers < "+lineinf);
         /*outliers.forEach(o ->{
             mesures.add(o+"");
         });*/
-        return mesures;
+
     }
 
     public void calculMesuresDispersionAll(List<List<String>> paramlist){
@@ -205,6 +216,12 @@ public class Statistics {
     public Double calculEcartType(){
         //todo
         return 0.;
+    }
+
+    public void calculMesures(List<String> paramlist){
+        calculTendanceCentrale(paramlist);
+        calculMesuresDispersion(paramlist);
+
     }
 
 }

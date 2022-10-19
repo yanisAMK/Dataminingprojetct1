@@ -36,7 +36,7 @@ public class HistogrammsPlot {
                 dataset, PlotOrientation.VERTICAL, true,true,true);
     }
 
-    public void createframe(JFreeChart histogram){
+    public ChartPanel createframe(JFreeChart histogram){
         ChartPanel panel = new ChartPanel(histogram);
         panel.setPreferredSize(new Dimension(300, 300));
         JFrame frame = new JFrame();
@@ -44,6 +44,7 @@ public class HistogrammsPlot {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        return panel;
 
     }
 
@@ -62,5 +63,6 @@ public class HistogrammsPlot {
         createframe(histogramchart);
         renderplot(histogramchart);
     }
+
 
 }

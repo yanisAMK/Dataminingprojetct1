@@ -52,6 +52,9 @@ public class MainInterfaceController {
     public Label iqrLabel;
     public Label nbOutlierLabel;
 
+    public Label varianceLabel;
+    public Label ecartTypeLabel;
+
     public Button calculerButton;
 
     public Button calculerButton1;
@@ -68,6 +71,8 @@ public class MainInterfaceController {
     public Label nbOutlierLabel1;
     public Button compareButton;
 
+    public Label varianceLabel1;
+    public Label ecartTypeLabel1;
 
 
 
@@ -92,6 +97,7 @@ public class MainInterfaceController {
 
     }
 
+    //TODO afficher la variance et ecart type
     @FXML
     void calculerMesures(ActionEvent event){
         int index = data.attributnames.indexOf(attributBox.getValue());
@@ -140,8 +146,8 @@ public class MainInterfaceController {
         int index1 = data.attributnames.indexOf(attributBox1.getValue());
         int index = data.attributnames.indexOf(attributBox.getValue());
 
-        scatter.generateScatterPlot(data.attributlist.get(index),
-                data.attributlist.get(index1), data.attributnames.get(index), data.attributnames.get(index1));
+        scatter.generateScatterPlot(data.unsortedAttributes.get(index),
+                data.unsortedAttributes.get(index1), data.attributnames.get(index), data.attributnames.get(index1));
 
 
     }

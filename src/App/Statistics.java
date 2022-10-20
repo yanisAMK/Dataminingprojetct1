@@ -81,16 +81,8 @@ public class Statistics {
             paramsfreq.remove(max);
             max = Collections.max(paramsfreq, null);
         }
-        //////////////////////////////////////////////////////
+
         List<Integer> maxindex = new ArrayList<>() ;
-        /*
-        // a enlever si on retourne les modes de frequence 1
-        if(paramsfreq.size() == paramlist.size()){
-            modes.add("No mode");
-            return modes;
-        }
-        */
-        ////////////////////////////////////////////////////
 
         for (int i = 0; i < paramsfreq.size(); i++) {
             if(paramsfreq.get(i).equals(max)){

@@ -31,6 +31,4 @@ public class Main extends Application {
 
 
 //todo refaire le rapport
-//todo fix interface
-//todo affichree la varance
 //todo afficher les valeurs vides

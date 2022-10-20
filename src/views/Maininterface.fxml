@@ -49,11 +49,13 @@
                                           <Label fx:id="iqrLabel" layoutX="615.0" layoutY="90.0" />
                                           <Label layoutX="454.0" layoutY="63.0" text="Min :" />
                                           <Label fx:id="nbOutlierLabel" layoutX="615.0" layoutY="121.0" />
-                                          <Label layoutX="615.0" layoutY="153.0" text="Label" />
+                                          <Label fx:id="varianceLabel" layoutX="615.0" layoutY="153.0" />
                                           <Label layoutX="456.0" layoutY="90.0" text="IQR :" />
                                           <Label layoutX="454.0" layoutY="121.0" text="Nombre d'outliers :" />
-                                          <Label layoutX="455.0" layoutY="154.0" text="Label" />
+                                          <Label layoutX="455.0" layoutY="154.0" text="Variance :" />
                                           <Label fx:id="q3Label" layoutX="344.0" layoutY="153.0" />
+                                          <Label layoutX="455.0" layoutY="185.0" text="Ecart type :" />
+                                          <Label fx:id="ecartTypeLabel" layoutX="615.0" layoutY="185.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -75,17 +77,19 @@
                                           <Label fx:id="iqrLabel1" layoutX="615.0" layoutY="90.0" />
                                           <Label layoutX="454.0" layoutY="63.0" text="Min :" />
                                           <Label fx:id="nbOutlierLabel1" layoutX="615.0" layoutY="121.0" />
-                                          <Label layoutX="615.0" layoutY="153.0" text="Label" />
+                                          <Label fx:id="varianceLabel1" layoutX="615.0" layoutY="153.0" />
                                           <Label layoutX="456.0" layoutY="90.0" text="IQR :" />
                                           <Label layoutX="454.0" layoutY="121.0" text="Nombre d'outliers :" />
-                                          <Label layoutX="455.0" layoutY="154.0" text="Label" />
+                                          <Label layoutX="455.0" layoutY="154.0" text="Variance :" />
                                           <Label fx:id="q3Label1" layoutX="344.0" layoutY="153.0" />
                                           <Label layoutX="21.0" layoutY="63.0" text="Tendances Centrales:" underline="true" />
                                           <Separator layoutX="263.0" layoutY="48.0" orientation="VERTICAL" prefHeight="200.0" />
                                           <Label layoutX="285.0" layoutY="153.0" text="Q3 :" />
                                           <ComboBox fx:id="attributBox1" layoutX="22.0" layoutY="27.0" prefWidth="150.0" promptText="Selectionner Attribut 2" />
-                                          <Button fx:id="calculerButton" layoutX="197.0" layoutY="27.0" mnemonicParsing="false" onAction="#calculerMesures2" prefHeight="25.0" prefWidth="59.0" text="Calculer" />
+                                          <Button fx:id="calculerButton1" layoutX="197.0" layoutY="27.0" mnemonicParsing="false" onAction="#calculerMesures2" prefHeight="25.0" prefWidth="59.0" text="Calculer" />
                                           <Button fx:id="compareButton" layoutX="194.0" layoutY="223.0" mnemonicParsing="false" onAction="#compareAttributes" text="Compare" />
+                                          <Label fx:id="ecartTypeLabel1" layoutX="615.0" layoutY="188.0" />
+                                          <Label layoutX="456.0" layoutY="188.0" text="Ecart type :" />
                                        </children>
                                     </AnchorPane>
                                 </items>

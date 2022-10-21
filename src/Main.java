@@ -28,7 +28,3 @@ public class Main extends Application {
 
     }
 }
-
-
-//todo refaire le rapport
-//todo afficher les valeurs vides

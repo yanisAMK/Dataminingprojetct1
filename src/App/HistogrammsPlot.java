@@ -26,7 +26,6 @@ public class HistogrammsPlot {
         }
 
         dataset.addSeries(attributname, values,
-                //new HashSet<>(attribut).size()
                 10);
         return dataset;
     }

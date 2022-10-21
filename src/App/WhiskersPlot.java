@@ -29,7 +29,6 @@ public class WhiskersPlot {
         });
         BoxAndWhiskerItem x = BoxAndWhiskerCalculator.calculateBoxAndWhiskerStatistics(values);
         this.range = new Range((Double) x.getMinOutlier(),(Double)x.getMaxOutlier()*1.2);
-
         whiskerdata.add(new Date() , x);
         return whiskerdata;
     }

@@ -1,10 +1,7 @@
 package src.app;
-
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-
 public class Statistics {
-
     public HashMap<String, String> mesures = new HashMap<>();
     public boolean isNumeric(String str) {
         try {
@@ -83,7 +80,6 @@ public class Statistics {
         }
 
         List<Integer> maxindex = new ArrayList<>() ;
-
         for (int i = 0; i < paramsfreq.size(); i++) {
             if(paramsfreq.get(i).equals(max)){
                 maxindex.add(i);
@@ -98,13 +94,11 @@ public class Statistics {
             mode.add("All values are unique");
             return mode;
         }
-
         return modes;
     }
 
 
     public void calculTendanceCentrale(List<String> paramlist){
-
         mesures.put("moyenne" ,calculMoyenne(paramlist));
         mesures.put("mediane" ,calculMedianne(paramlist));
         mesures.put("mode" , ""+calculMode(paramlist));
@@ -163,7 +157,6 @@ public class Statistics {
         double linesup = Double.parseDouble(quartiles.get(2)) + IQR*1.5;
         double lineinf = Double.parseDouble(quartiles.get(0)) - IQR*1.5;
 
-
         List<Double> outliers = new ArrayList<>();
         paramlist.forEach(s ->{
             if(Double.parseDouble(s) < lineinf){
@@ -173,7 +166,6 @@ public class Statistics {
                 outliers.add(Double.parseDouble(s));
             }
         });
-
 
         mesures.put("max",max+"");
         mesures.put("min",min+"");
@@ -200,7 +192,6 @@ public class Statistics {
             }
         });
     }
-
 
     public Double calculVariance(List<String> attributes){
         return Math.pow(calculEcartType(attributes),2);

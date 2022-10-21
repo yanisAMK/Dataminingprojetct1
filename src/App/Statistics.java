@@ -182,6 +182,8 @@ public class Statistics {
         mesures.put("q3",quartiles.get(2));
         mesures.put("iqr",IQR + "");
         mesures.put("nbOutliers", outliers.size()+"");
+        mesures.put("variance", calculVariance(paramlist)+"");
+        mesures.put("ecartType", calculEcartType(paramlist)+ "");
 
         //mesures.add(linesup +" < outliers || outliers < "+lineinf);
         /*outliers.forEach(o ->{
@@ -200,14 +202,20 @@ public class Statistics {
     }
 
 
-    public Double calculVariance(){
-        //todo
-        return 0.;
+    public Double calculVariance(List<String> attributes){
+        return Math.pow(calculEcartType(attributes),2);
     }
 
-    public Double calculEcartType(){
-        //todo
-        return 0.;
+    public Double calculEcartType(List<String> attributes){
+        double sum = 0;
+        double moy = Double.parseDouble(calculMoyenne(attributes));
+        double std = 0;
+        for (String attribute : attributes) {
+            std = std + Math.pow((Double.parseDouble(attribute) - moy), 2);
+        }
+        std /= attributes.size();
+        std = Math.sqrt(std);
+        return std;
     }
 
     public void calculMesures(List<String> paramlist){

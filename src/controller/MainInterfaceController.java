@@ -19,6 +19,7 @@ import src.app.*;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class MainInterfaceController {
     Data data = new Data();
@@ -101,21 +102,47 @@ public class MainInterfaceController {
     @FXML
     void calculerMesures(ActionEvent event){
         int index = data.attributnames.indexOf(attributBox.getValue());
-        stats.calculMesures(data.attributlist.get(index));
 
-        moyenneLabel.setText(stats.mesures.get("moyenne"));
-        medianeLabel.setText(stats.mesures.get("mediane"));
-        modeLabel.setText(stats.mesures.get("mode"));
-        maxLabel.setText(stats.mesures.get("max"));
-        minLabel.setText(stats.mesures.get("min"));
-        q1Label.setText(stats.mesures.get("q1"));
-        q2Label.setText(stats.mesures.get("q2"));
-        q3Label.setText(stats.mesures.get("q3"));
-        iqrLabel.setText(stats.mesures.get("iqr"));
-        nbOutlierLabel.setText(stats.mesures.get("nbOutliers"));
 
-        histogram.generatehistogramplot(data.attributlist.get(index), data.attributnames.get(index));
-        whiskers.generatewhiskerplot(data.attributlist.get(index), data.attributnames.get(index));
+        if(stats.checktype(data.attributlist.get(index))) {
+            stats.calculMesures(data.attributlist.get(index));
+            iqrLabel.setText(stats.mesures.get("iqr"));
+            nbOutlierLabel.setText(stats.mesures.get("nbOutliers"));
+            moyenneLabel.setText(stats.mesures.get("moyenne"));
+            maxLabel.setText(stats.mesures.get("max"));
+            minLabel.setText(stats.mesures.get("min"));
+            ecartTypeLabel.setText(stats.mesures.get("ecartType"));
+            varianceLabel.setText(stats.mesures.get("variance"));
+            medianeLabel.setText(stats.mesures.get("mediane"));
+            modeLabel.setText(stats.mesures.get("mode"));
+            q1Label.setText(stats.mesures.get("q1"));
+            q2Label.setText(stats.mesures.get("q2"));
+            q3Label.setText(stats.mesures.get("q3"));
+
+            histogram.generatehistogramplot(data.attributlist.get(index), data.attributnames.get(index));
+            whiskers.generatewhiskerplot(data.attributlist.get(index), data.attributnames.get(index));
+
+        }
+        else{
+            iqrLabel.setText(" ");
+            nbOutlierLabel.setText(" ");
+            moyenneLabel.setText(" ");
+            maxLabel.setText(" ");
+            minLabel.setText(" ");
+            medianeLabel.setText(" ");
+            varianceLabel.setText(" ");
+            ecartTypeLabel.setText(" ");
+            modeLabel.setText(stats.calculMode(data.attributlist.get(index))+ "");
+            List<String> quartiles = stats.quartile(data.attributlist.get(index));
+            q1Label.setText(quartiles.get(0));
+            q2Label.setText(quartiles.get(1));
+            q3Label.setText(quartiles.get(2));
+
+        }
+
+
+
+
 
 
     }
@@ -123,21 +150,45 @@ public class MainInterfaceController {
     @FXML
     void calculerMesures2(ActionEvent event){
         int index1 = data.attributnames.indexOf(attributBox1.getValue());
-        stats.calculMesures(data.attributlist.get(index1));
 
-        moyenneLabel1.setText(stats.mesures.get("moyenne"));
-        medianeLabel1.setText(stats.mesures.get("mediane"));
-        modeLabel1.setText(stats.mesures.get("mode"));
-        maxLabel1.setText(stats.mesures.get("max"));
-        minLabel1.setText(stats.mesures.get("min"));
-        q1Label1.setText(stats.mesures.get("q1"));
-        q2Label1.setText(stats.mesures.get("q2"));
-        q3Label1.setText(stats.mesures.get("q3"));
-        iqrLabel1.setText(stats.mesures.get("iqr"));
-        nbOutlierLabel1.setText(stats.mesures.get("nbOutliers"));
 
-        histogram1.generatehistogramplot(data.attributlist.get(index1), data.attributnames.get(index1));
-        whiskers1.generatewhiskerplot(data.attributlist.get(index1), data.attributnames.get(index1));
+        if(stats.checktype(data.attributlist.get(index1))) {
+            stats.calculMesures(data.attributlist.get(index1));
+            iqrLabel1.setText(stats.mesures.get("iqr"));
+            nbOutlierLabel1.setText(stats.mesures.get("nbOutliers"));
+            moyenneLabel1.setText(stats.mesures.get("moyenne"));
+            maxLabel1.setText(stats.mesures.get("max"));
+            minLabel1.setText(stats.mesures.get("min"));
+            ecartTypeLabel1.setText(stats.mesures.get("ecartType"));
+            varianceLabel1.setText(stats.mesures.get("variance"));
+            medianeLabel1.setText(stats.mesures.get("mediane"));
+            modeLabel1.setText(stats.mesures.get("mode"));
+            q1Label1.setText(stats.mesures.get("q1"));
+            q2Label1.setText(stats.mesures.get("q2"));
+            q3Label1.setText(stats.mesures.get("q3"));
+
+            histogram1.generatehistogramplot(data.attributlist.get(index1), data.attributnames.get(index1));
+            whiskers1.generatewhiskerplot(data.attributlist.get(index1), data.attributnames.get(index1));
+        }
+        else{
+            iqrLabel1.setText(" ");
+            nbOutlierLabel1.setText(" ");
+            moyenneLabel1.setText(" ");
+            maxLabel1.setText(" ");
+            minLabel1.setText(" ");
+            medianeLabel1.setText(" ");
+            varianceLabel1.setText(" ");
+            ecartTypeLabel1.setText(" ");
+            modeLabel1.setText(stats.calculMode(data.attributlist.get(index1))+ "");
+            List<String> quartiles = stats.quartile(data.attributlist.get(index1));
+            q1Label1.setText(quartiles.get(0));
+            q2Label1.setText(quartiles.get(1));
+            q3Label1.setText(quartiles.get(2));
+
+        }
+
+
+
 
 
     }

@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -23,6 +25,7 @@ import java.util.List;
 
 public class MainInterfaceController {
     Data data = new Data();
+    //dataset ds;
     Statistics stats = new Statistics();
     HistogrammsPlot histogram = new HistogrammsPlot();
     WhiskersPlot whiskers = new WhiskersPlot();
@@ -81,23 +84,28 @@ public class MainInterfaceController {
 
     @FXML
     void loadData(ActionEvent event) {
+        clearFields();
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Ressource File");
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLSX files (*.XLSX, *.xlsx)", "*.XLSX", "*.xlsx");
         fileChooser.getExtensionFilters().add(extFilter);
-        String path = fileChooser.showOpenDialog(stage).getAbsolutePath();
-        fileExtension = path.split("\\.")[1];
-        filePath = path;
-        data.reaData(path);
-        StringBuilder s = new StringBuilder();
-        ObservableList<String> x = FXCollections.observableArrayList();
-        x.addAll(data.attributnames);
-        attributBox.setItems(x);
-        attributBox1.setItems(x);
+        File selectedFile = fileChooser.showOpenDialog(stage);
 
-        init();
-        temp(path);
+        data =new Data();
+        if (selectedFile != null) {
+            String path = selectedFile.getAbsolutePath();
+            fileExtension = path.split("\\.")[1];
+            filePath = path;
+            data.reaData(path);
+            StringBuilder s = new StringBuilder();
+            ObservableList<String> x = FXCollections.observableArrayList();
+            x.addAll(data.attributnames);
+            attributBox.setItems(x);
+            attributBox1.setItems(x);
 
+            init();
+            printDescription(path);
+        }
     }
 
     @FXML
@@ -122,6 +130,7 @@ public class MainInterfaceController {
             whiskers.generatewhiskerplot(data.attributlist.get(index), data.attributnames.get(index));
 
         } else {
+            //System.out.println("/");
             iqrLabel.setText(" ");
             nbOutlierLabel.setText(" ");
             moyenneLabel.setText(" ");
@@ -196,22 +205,16 @@ public class MainInterfaceController {
     //HomeTabController
     public void init() { //ActionEvent actionEvent
         // this.tableView = new TableView();
-        final List<List<String>> excelData = data.dataSet;//JavaFXApplication124.readExcelFile("C:/Users/lenovo/IdeaProjects/test/Dataset1_ HR-EmployeeAttrition.xlsx");//Get data from excel file
+        final List<List<String>> excelData = data.dataSet;
 
         ObservableList<ObservableList<String>> data_ = FXCollections.observableArrayList();
         //Add excel data to an observable list
         for (int i = 0; i < excelData.size(); i++) {
             data_.add(FXCollections.observableArrayList(excelData.get(i)));
         }
-        // attributnames = data_.get(0);
-        // data_.remove(0);
 
         tableView.setItems(data_);
         tableView.setEditable(true);
-
-        System.out.println("noOfCol and rows :");
-        System.out.println(excelData.get(0).size());
-        System.out.println(excelData.size());
 
         //Create the table columns, set the cell value factory and add the column to the tableview.
         for (int i = 0; i < excelData.get(0).size(); i++) {
@@ -232,18 +235,12 @@ public class MainInterfaceController {
 
             column.setOnEditCommit(event -> {
                 ObservableList<String> row = event.getRowValue();
-                System.out.println("1" + row);
-                System.out.println("old row ----" + tableView.focusModelProperty().get().focusedCellProperty().get().getColumn());
                 row.set(tableView.focusModelProperty().get().focusedCellProperty().get().getColumn(), event.getNewValue());
-                System.out.println("new row ---" + event.getRowValue());
-
             });
 
             tableView.getColumns().add(column);
 
         }
-
-
     }
 
 
@@ -263,14 +260,31 @@ public class MainInterfaceController {
                 XSSFSheet spreadsheet = workbook.createSheet("sample");
 
                 XSSFRow row = null;
+                XSSFCell cell = null;
+
+                row = spreadsheet.createRow(0);
+                for (int j = 0; j < data.noOfCols; j++) {
+                    cell = row.createCell(j);
+                    cell.setCellValue(Data.attributnames.get(j));
+                }
 
                 for (int i = 0; i < tableView.getItems().size(); i++) {
-                    row = spreadsheet.createRow(i);
+                    row = spreadsheet.createRow(i+1);
                     for (int j = 0; j < tableView.getColumns().size(); j++) {
-                        if (tableView.getColumns().get(j).getCellData(i) != null) {
-                            row.createCell(j).setCellValue(tableView.getColumns().get(j).getCellData(i).toString());
+                        cell = row.createCell(j);
+                        if (tableView.getColumns().get(j).getCellData(i) != null && !tableView.getColumns().get(j).getCellData(i).toString().equals(" ") && !tableView.getColumns().get(j).getCellData(i).toString().isEmpty()) {
+                            if(Data.attribute_type.get(j) == 0){
+
+                                cell.setCellValue(Float.parseFloat(tableView.getColumns().get(j).getCellData(i).toString()));
+                                cell.setCellType(CellType.NUMERIC);
+                            }
+                            else {
+                                cell.setCellValue(tableView.getColumns().get(j).getCellData(i).toString());
+                                cell.setCellType(CellType.STRING);
+                            }
+
                         } else {
-                            row.createCell(j).setCellValue("");
+                            cell.setCellValue("");
                         }
                     }
                 }
@@ -288,29 +302,28 @@ public class MainInterfaceController {
         }
     }
 
-    public void temp(String filepath) {
-        File excelFile = new File(filepath
-        );
-        dataset ds = new dataset(excelFile);
-
+    public void printDescription(String filepath) {
 
         //Description attribut
         String s = "";
-        for (int i = 0; i < ds.noOfCols; i++) {
-            //s = s.concat(ds.getTypeAtrribute(ds.type_attribute[i])+"  ");}
-            s = s.concat("\n\n# attribut : " + ds.dataset[0][i].toString() + "\n  type attribut      : " + ds.getTypeAtrribute(ds.type_attribute[i]) + "\n  plage de valeurs : " + ds.plage_attribute[i] + "\n  valeurs manquantes : " + ds.noMissing_attribute[i]);
-        }
+        for(int i=0; i<data.noOfCols; i++){
+            s = s.concat("\n\n# attribut : " + data.attributnames.get(i) + "\n  type attribut      : " + data.getTypeAtrribute(data.attribute_type.get(i)) + "\n  plage de valeurs : "+ data.getPlageValeur(i) + "\n  valeurs manquantes : " + data.noMissing_attribute.get(i));
 
+        }
 
         descriptionAttributs.appendText(s);
 
         //Description Global
         s = "";
-        s = s.concat(" Nombre de lignes : " + ds.noOfRows + "\n Nombre de colonnes : " + ds.noOfCols + "\n Nombre total de valeurs manquantes : " + ds.noMissing_total);
+        s = s.concat(" Nombre de lignes : " + data.noOfRows + "\n Nombre de colonnes : " + data.noOfCols + "\n Nombre total de valeurs manquantes : " + data.noMissing_total);
         s = s.concat("");
 
         descriptionGlobal.appendText(s);
+    }
 
-
+    private void clearFields(){
+        tableView.getItems().clear();
+        descriptionAttributs.setText("");
+        descriptionGlobal.setText("");
     }
 }

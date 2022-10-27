@@ -126,7 +126,7 @@ public class Statistics {
 
         return quartiles;
     }
-    public double getmax(List<String> paramlist){
+    public static double getmax(List<String> paramlist){
         final double[] max = new double[1];
         max[0] = Double.parseDouble(paramlist.get(0));
         paramlist.forEach(s -> {
@@ -136,7 +136,7 @@ public class Statistics {
         });
         return max[0];
     }
-    public double getmin(List<String> paramlist){
+    public static double getmin(List<String> paramlist){
         final double[] min = new double[1];
         min[0] = Double.parseDouble(paramlist.get(0));
         paramlist.forEach(s -> {

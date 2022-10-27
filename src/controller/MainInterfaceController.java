@@ -14,18 +14,13 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import src.app.*;
-
-import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainInterfaceController {
     Data data = new Data();
-    //dataset ds;
     Statistics stats = new Statistics();
     HistogrammsPlot histogram = new HistogrammsPlot();
     WhiskersPlot whiskers = new WhiskersPlot();
@@ -97,7 +92,7 @@ public class MainInterfaceController {
             fileExtension = path.split("\\.")[1];
             filePath = path;
             data.reaData(path);
-            StringBuilder s = new StringBuilder();
+
             ObservableList<String> x = FXCollections.observableArrayList();
             x.addAll(data.attributnames);
             attributBox.setItems(x);
@@ -195,7 +190,7 @@ public class MainInterfaceController {
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
-// partie à séparer
+// Home panel
 
     @FXML
     private TableView<ObservableList<String>> tableView;
@@ -204,13 +199,13 @@ public class MainInterfaceController {
 
     //HomeTabController
     public void init() { //ActionEvent actionEvent
-        // this.tableView = new TableView();
+
         final List<List<String>> excelData = data.dataSet;
 
         ObservableList<ObservableList<String>> data_ = FXCollections.observableArrayList();
         //Add excel data to an observable list
-        for (int i = 0; i < excelData.size(); i++) {
-            data_.add(FXCollections.observableArrayList(excelData.get(i)));
+        for (List<String> excelDatum : excelData) {
+            data_.add(FXCollections.observableArrayList(excelDatum));
         }
 
         tableView.setItems(data_);
@@ -228,10 +223,8 @@ public class MainInterfaceController {
 
             //make column editable
             column.setCellFactory(TextFieldTableCell.forTableColumn());
-            /**
-             * This code will allow the user to double click on a cell and update it
-             */
 
+            // This code will allow the user to double click on a cell and update it
 
             column.setOnEditCommit(event -> {
                 ObservableList<String> row = event.getRowValue();

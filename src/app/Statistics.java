@@ -176,7 +176,8 @@ public class Statistics {
         mesures.put("nbOutliers", outliers.size()+"");
         mesures.put("variance", calculVariance(paramlist)+"");
         mesures.put("ecartType", calculEcartType(paramlist)+ "");
-
+        mesures.put("linesup", linesup+"");
+        mesures.put("lineinf",lineinf+"");
         //mesures.add(linesup +" < outliers || outliers < "+lineinf);
         /*outliers.forEach(o ->{
             mesures.add(o+"");

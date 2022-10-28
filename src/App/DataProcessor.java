@@ -1,5 +1,6 @@
 package src.app;
 
+import javax.swing.text.SimpleAttributeSet;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -54,6 +55,27 @@ public class DataProcessor {
         }
         return discrettedAttributeList ;
 
+    }
+
+    public void traitementValeursManquantes(List<String> attributeList, String valDeRemplacement){
+
+        for (int i = 0; i < attributeList.size(); i++) {
+
+            if (attributeList.get(i).equals(" ")) {
+                attributeList.set(i, valDeRemplacement);
+        }
+        }
+    }
+
+    public void traitementValeursAberantes(List<String> attributeList, String valDeRemplacement){
+        Statistics stats = new Statistics();
+        stats.calculMesuresDispersion(attributeList);
+        for (int i = 0; i < attributeList.size(); i++) {
+            if(( Float.parseFloat(attributeList.get(i))< Float.parseFloat(stats.mesures.get("lineinf")))||
+                    (Float.parseFloat(stats.mesures.get("linesup"))> Float.parseFloat(attributeList.get(i)))){
+                attributeList.set(i, valDeRemplacement);
+            }
+        }
     }
 
 

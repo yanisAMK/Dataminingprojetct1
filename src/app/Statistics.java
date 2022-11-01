@@ -3,15 +3,15 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 public class Statistics {
     public HashMap<String, String> mesures = new HashMap<>();
-    public boolean isNumeric(String str) {
+    public static boolean isNumeric(String str) {
         try {
-            Double.parseDouble(str);
+            Float.parseFloat(str);
             return true;
         } catch(NumberFormatException e){
             return false;
         }
     }
-    public boolean checktype(List<String> paramlist){
+    public static boolean checktype(List<String> paramlist){
         boolean isnumeric = false;
         for (int i = 0; i < Math.ceil(paramlist.size()/4); i++) {
             if(isNumeric(paramlist.get(i))){
@@ -21,12 +21,12 @@ public class Statistics {
         return isnumeric;
     }
 
-    public List<String> getDistinctValues(List<String> paramlist){
+    public static List<String> getDistinctValues(List<String> paramlist){
         List<String> distinctparams = new ArrayList<>(new HashSet<>(paramlist));
         return distinctparams;
     }
 
-    public List<Integer> getValuesFreq(List<String> paramlist,List<String> distinctparams ){
+    public static List<Integer> getValuesFreq(List<String> paramlist, List<String> distinctparams){
         List<Integer> paramsfreq = new ArrayList<>();
         for (String dval: distinctparams
              ) {
@@ -37,20 +37,20 @@ public class Statistics {
 
     // calcul des tendances centrales
 
-    public String calculMoyenne(List<String> paramlist){
+    public static String calculMoyenne(List<String> paramlist){
 
         float moyenne = 0;
         for (String val: paramlist) {
             if (isNumeric(val)) {
                 moyenne += Float.parseFloat(val);
             }else {
-                return "None";
+                //return "None";
             }
         }
         return "" + moyenne/paramlist.size();
     }
 
-    public String calculMedianne(List<String> paramlist){
+    public static String calculMedianne(List<String> paramlist){
         int length = paramlist.size();
         if (length%2 != 0){
             if(isNumeric(paramlist.get((length+1)/2))){
@@ -66,14 +66,14 @@ public class Statistics {
         return "None";
 
     }
-    public List<String> calculMode(List<String> paramlist){
+    public static List<String> calculMode(List<String> paramlist){
         List<String> distinctparams = getDistinctValues(paramlist);
         List<Integer> paramsfreq = getValuesFreq(paramlist, distinctparams);
         List<String> modes = new ArrayList<>();
         Integer max = Collections.max(paramsfreq, null);
 
         //suppression des valeures nulls des parms distinct et freqparam
-        if(Objects.equals(distinctparams.get(paramsfreq.indexOf(max)), " ")){
+        if(Objects.equals(distinctparams.get(paramsfreq.indexOf(max)), " ") || Objects.equals(distinctparams.get(paramsfreq.indexOf(max)), "NaN")){
             distinctparams.remove(paramsfreq.indexOf(max));
             paramsfreq.remove(max);
             max = Collections.max(paramsfreq, null);
@@ -91,7 +91,7 @@ public class Statistics {
 
         if(modes.size() == paramlist.size()){
             List<String>mode = new ArrayList<>();
-            mode.add("All values are unique");
+            mode.add(" ");//mode.add("All values are unique");
             return mode;
         }
         return modes;
@@ -126,22 +126,26 @@ public class Statistics {
 
         return quartiles;
     }
-    public static double getmax(List<String> paramlist){
-        final double[] max = new double[1];
-        max[0] = Double.parseDouble(paramlist.get(0));
+    public static float getmax(List<String> paramlist){
+        final float[] max = new float[1];
+        max[0] = Float.parseFloat(paramlist.get(0));
         paramlist.forEach(s -> {
-            if(max[0] < Double.parseDouble(s)){
-                max[0] = Double.parseDouble(s);
+            if (! s.equals(" ") && ! s.equals("NaN")){
+                if(max[0] < Float.parseFloat(s)){
+                    max[0] = Float.parseFloat(s);
+                }
             }
         });
         return max[0];
     }
-    public static double getmin(List<String> paramlist){
-        final double[] min = new double[1];
-        min[0] = Double.parseDouble(paramlist.get(0));
+    public static float getmin(List<String> paramlist){
+        final float[] min = new float[1];
+        min[0] = Float.parseFloat(paramlist.get(0));
         paramlist.forEach(s -> {
-            if(min[0] > Double.parseDouble(s)){
-                min[0] = Double.parseDouble(s);
+            if (! s.equals(" ") && ! s.equals("NaN")){
+                if(min[0] > Float.parseFloat(s)){
+                    min[0] = Float.parseFloat(s);
+                }
             }
         });
         return min[0];
@@ -151,19 +155,21 @@ public class Statistics {
 
         List<String> quartiles = quartile(paramlist);
 
-        double max = getmax(paramlist);
-        double min = getmin(paramlist);
-        double IQR = (Double.parseDouble(quartiles.get(2)) - Double.parseDouble(quartiles.get(0)));
-        double linesup = Double.parseDouble(quartiles.get(2)) + IQR*1.5;
-        double lineinf = Double.parseDouble(quartiles.get(0)) - IQR*1.5;
+        float max = getmax(paramlist);
+        float min = getmin(paramlist);
+        float IQR = (Float.parseFloat(quartiles.get(2)) - Float.parseFloat(quartiles.get(0)));
+        float linesup = (float) (Float.parseFloat(quartiles.get(2)) + IQR*1.5);
+        float lineinf = (float) (Float.parseFloat(quartiles.get(0)) - IQR*1.5);
 
-        List<Double> outliers = new ArrayList<>();
+        List<Float> outliers = new ArrayList<>();
         paramlist.forEach(s ->{
-            if(Double.parseDouble(s) < lineinf){
-                outliers.add(Double.parseDouble(s));
-            }
-            if(Double.parseDouble(s) > linesup){
-                outliers.add(Double.parseDouble(s));
+            if(! s.equals(" ") && ! s.equals("NaN")){
+                if(Float.parseFloat(s) < lineinf){
+                    outliers.add(Float.parseFloat(s));
+                }
+                if(Float.parseFloat(s) > linesup){
+                    outliers.add(Float.parseFloat(s));
+                }
             }
         });
 
@@ -178,6 +184,7 @@ public class Statistics {
         mesures.put("ecartType", calculEcartType(paramlist)+ "");
         mesures.put("linesup", linesup+"");
         mesures.put("lineinf",lineinf+"");
+
         //mesures.add(linesup +" < outliers || outliers < "+lineinf);
         /*outliers.forEach(o ->{
             mesures.add(o+"");
@@ -194,19 +201,20 @@ public class Statistics {
         });
     }
 
-    public Double calculVariance(List<String> attributes){
-        return Math.pow(calculEcartType(attributes),2);
+    public Float calculVariance(List<String> attributes){
+        return (float) Math.pow(calculEcartType(attributes),2);
     }
 
-    public Double calculEcartType(List<String> attributes){
-        double sum = 0;
-        double moy = Double.parseDouble(calculMoyenne(attributes));
-        double std = 0;
+    public static Float calculEcartType(List<String> attributes){
+        float sum = 0;
+        float moy = Float.parseFloat(calculMoyenne(attributes));
+        float std = 0;
         for (String attribute : attributes) {
-            std = std + Math.pow((Double.parseDouble(attribute) - moy), 2);
+            if (! attribute.equals(" ") && ! attribute.equals("NaN"))
+            std = (float) (std + Math.pow((Float.parseFloat(attribute) - moy), 2));
         }
         std /= attributes.size();
-        std = Math.sqrt(std);
+        std = (float) Math.sqrt(std);
         return std;
     }
 

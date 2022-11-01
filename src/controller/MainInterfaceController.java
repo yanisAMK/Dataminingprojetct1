@@ -646,7 +646,7 @@ public class MainInterfaceController {
 
         String selected = missingValuesCombo.getSelectionModel().getSelectedItem();
         String selected_attribute = attributCombo.getSelectionModel().getSelectedItem();
-        int indexAtt = attributCombo.getSelectionModel().getSelectedIndex();
+        //int indexAtt = attributCombo.getSelectionModel().getSelectedIndex();
 
         if (selected != null && !selected.isEmpty() && selected_attribute != null && !selected_attribute.isEmpty()) {
 
@@ -684,10 +684,10 @@ public class MainInterfaceController {
 
             }
             else {
-/*                int indexAtt = -1;
+                int indexAtt = -1;
                 for(int i = 0; i < Data.attributnames.size(); i++)
                     if(Data.attributnames.get(i).equals(selected_attribute))
-                        indexAtt = i;*/
+                        indexAtt = i;
 
                 switch (missingValuesCombo.getSelectionModel().getSelectedItem()) {
                     case "Suppression":
@@ -721,7 +721,7 @@ public class MainInterfaceController {
     void treatOutliers(ActionEvent event) {
         String selected = outliersCombo.getSelectionModel().getSelectedItem();
         String selected_attribute = attributWithOutliersCombo.getSelectionModel().getSelectedItem();
-        int indexAtt = attributWithOutliersCombo.getSelectionModel().getSelectedIndex();
+        //int indexAtt = attributWithOutliersCombo.getSelectionModel().getSelectedIndex();
 
         if (selected != null && !selected.isEmpty() && selected_attribute != null && !selected_attribute.isEmpty()) {
 
@@ -753,6 +753,11 @@ public class MainInterfaceController {
                 populateTable(unsortedAttributes);
             }
             else {
+
+                int indexAtt = -1;
+                for(int i = 0; i < Data.attributnames.size(); i++)
+                    if(Data.attributnames.get(i).equals(selected_attribute))
+                        indexAtt = i;
 
                 switch (outliersCombo.getSelectionModel().getSelectedItem()) {
                     case "Suppression":
@@ -810,9 +815,14 @@ public class MainInterfaceController {
     @FXML
     public void deleteColumn(ActionEvent actionEvent) {
         String selected_attribute = attributeToDeleteCombo.getSelectionModel().getSelectedItem();
-        int indexAtt = attributeToDeleteCombo.getSelectionModel().getSelectedIndex();
+        //int indexAtt = attributeToDeleteCombo.getSelectionModel().getSelectedIndex();
 
         if (selected_attribute != null && !selected_attribute.isEmpty()) {
+            //attribute index
+            int indexAtt = -1;
+            for(int i = 0; i < Data.attributnames.size(); i++)
+                if(Data.attributnames.get(i).equals(selected_attribute))
+                    indexAtt = i;
 
             suppressionAttribut(indexAtt);
             populateTable(unsortedAttributes);

@@ -146,12 +146,12 @@
                         <ComboBox fx:id="normalizationCombo" layoutX="475.0" layoutY="45.0" prefHeight="25.0" prefWidth="215.0" />
                         <Label layoutX="475.0" layoutY="28.0" text="Normalisation" />
                         <Button fx:id="normButton" layoutX="703.0" layoutY="45.0" mnemonicParsing="false" onAction="#normalization" text="OK" />
-                        <Button fx:id="reductionButton" layoutX="474.0" layoutY="155.0" mnemonicParsing="false" onAction="#dataReduction" prefHeight="25.0" prefWidth="218.0" text="Elimination des redondances" />
-                        <ComboBox fx:id="discretizationCombo" layoutX="475.0" layoutY="108.0" prefHeight="25.0" prefWidth="215.0" />
-                        <Label layoutX="477.0" layoutY="91.0" text="Discrétisation" />
-                        <Button fx:id="discretizationButton" layoutX="759.0" layoutY="108.0" mnemonicParsing="false" onAction="#discretisation" text="OK" />
-                        <TextField fx:id="noOfBins" layoutX="701.0" layoutY="108.0" prefHeight="25.0" prefWidth="44.0" />
-                        <Label layoutX="701.0" layoutY="91.0" text="no. bins" />
+                        <Button fx:id="reductionButton" layoutX="42.0" layoutY="153.0" mnemonicParsing="false" onAction="#dataReduction" prefHeight="25.0" prefWidth="170.0" text="Elimination des redondances" />
+                        <ComboBox fx:id="discretizationCombo" layoutX="475.0" layoutY="201.0" prefHeight="25.0" prefWidth="215.0" />
+                        <Label layoutX="477.0" layoutY="184.0" text="Discrétisation" />
+                        <Button fx:id="discretizationButton" layoutX="759.0" layoutY="201.0" mnemonicParsing="false" onAction="#discretisation" text="OK" />
+                        <TextField fx:id="noOfBins" layoutX="701.0" layoutY="201.0" prefHeight="25.0" prefWidth="44.0" />
+                        <Label layoutX="701.0" layoutY="184.0" text="no. bins" />
                         <ComboBox fx:id="missingValuesCombo" layoutX="212.0" layoutY="45.0" prefHeight="25.0" prefWidth="190.0" />
                         <Label layoutX="213.0" layoutY="28.0" text="Traitement des valeurs manquantes" />
                         <Button fx:id="missingValuesButton" layoutX="414.0" layoutY="45.0" mnemonicParsing="false" onAction="#treatMissingValues" text="OK" />
@@ -163,11 +163,14 @@
                         <ComboBox fx:id="attributWithOutliersCombo" layoutX="42.0" layoutY="108.0" prefHeight="25.0" prefWidth="150.0" />
                         <Label layoutX="42.0" layoutY="91.0" text="Attribut" />
                         <Separator layoutX="458.0" layoutY="17.0" orientation="VERTICAL" prefHeight="211.0" prefWidth="6.0" />
-                        <Button fx:id="savePretraitButton" layoutX="318.0" layoutY="189.0" mnemonicParsing="false" onAction="#save_2" prefHeight="25.0" prefWidth="113.0" text="Exporter la table" />
-                        <Button fx:id="dropCatButton" layoutX="474.0" layoutY="193.0" mnemonicParsing="false" onAction="#eliminationAttributsCategorique" prefHeight="25.0" prefWidth="218.0" text="Elimination des attributs catégoriques" />
-                        <ComboBox fx:id="attributeToDeleteCombo" layoutX="42.0" layoutY="189.0" prefWidth="150.0" />
-                        <Label layoutX="42.0" layoutY="172.0" text="Attribut" />
-                        <Button fx:id="deleteAttributeButton" layoutX="212.0" layoutY="189.0" mnemonicParsing="false" onAction="#deleteColumn" text="Supprimer" />
+                        <Button fx:id="savePretraitButton" layoutX="318.0" layoutY="202.0" mnemonicParsing="false" onAction="#save_2" prefHeight="25.0" prefWidth="113.0" text="Exporter la table" />
+                        <Button fx:id="dropCatButton" layoutX="227.0" layoutY="153.0" mnemonicParsing="false" onAction="#eliminationAttributsCategorique" prefHeight="25.0" prefWidth="218.0" text="Elimination des attributs catégoriques" />
+                        <ComboBox fx:id="attributeToDeleteCombo" layoutX="42.0" layoutY="202.0" prefWidth="150.0" />
+                        <Label layoutX="42.0" layoutY="185.0" text="Attribut" />
+                        <Button fx:id="deleteAttributeButton" layoutX="212.0" layoutY="202.0" mnemonicParsing="false" onAction="#deleteColumn" text="Supprimer" />
+                        <ComboBox fx:id="attributDiscretisation" layoutX="475.0" layoutY="147.0" prefWidth="150.0" />
+                        <Label layoutX="477.0" layoutY="130.0" text="Attribut" />
+                        <Separator layoutX="503.0" layoutY="107.0" prefWidth="200.0" />
                      </children>
                   </AnchorPane>
               </content>

@@ -414,6 +414,8 @@ public class MainInterfaceController {
     private ComboBox<String> normalizationCombo;
 
     @FXML
+    private ComboBox<String> attributDiscretisation;
+    @FXML
     private ComboBox<String> discretizationCombo;
 
     @FXML
@@ -451,6 +453,8 @@ public class MainInterfaceController {
         ObservableList<String> options = FXCollections.observableArrayList("Min Max", "z-score");
         normalizationCombo.setItems(options);
 
+        DataProcessor.normalized = false;
+
         options = FXCollections.observableArrayList("En classes d'effectifs égaux ", "En classes d'amplitudes égales");
         discretizationCombo.setItems(options);
 
@@ -470,6 +474,10 @@ public class MainInterfaceController {
         options = FXCollections.observableArrayList();
         options.addAll(Data.attributnames);
         attributeToDeleteCombo.setItems(options);
+
+        options = FXCollections.observableArrayList();
+        options.addAll(Data.attributnames);
+        attributDiscretisation.setItems(options);
 
         options = FXCollections.observableArrayList();
         options.add("All");
@@ -517,40 +525,41 @@ public class MainInterfaceController {
     void discretisation(ActionEvent event) {
         dropCategoricalAttributes();
         String selected = discretizationCombo.getSelectionModel().getSelectedItem();
+        String selected_attribute =attributDiscretisation.getSelectionModel().getSelectedItem();
+
         int k=1;
         if(! noOfBins.getText().isEmpty())
             k = Integer.parseInt(noOfBins.getText());
         else
             k = (int) Math.ceil(1 + (10/3) * Math.log10(Data.unsortedAttributes.get(0).size()));
 
-        if (selected != null && !selected.isEmpty()) { // && ! noOfBins.getText().isEmpty()
+        if (selected != null && !selected.isEmpty() && selected_attribute != null && !selected_attribute.isEmpty()) { // && ! noOfBins.getText().isEmpty()
+
+            int indexAtt = -1;
+            for(int i = 0; i < Data.attributnames.size(); i++)
+                if(Data.attributnames.get(i).equals(selected_attribute))
+                    indexAtt = i;
 
             List<List<String>> AttributeList = new ArrayList<>();
+            AttributeList = unsortedAttributes;
             List<String> discretizedAttribute = new ArrayList<>();
 
             if (selected.equals("En classes d'effectifs égaux ")){
 
                 List<List<String>> sortedDataset = new ArrayList<>();
 
-                for (int i=0; i< Data.dataSet.get(i).size();i++)
-                {
-                    sortedDataset = linkedListData_to_List(Data.sortDataSetByValuesOfAttribut(i));
-                    discretizedAttribute = DataProcessor.discretisation_effectifs(k, transposer(sortedDataset).get(i));
-                    AttributeList.add(discretizedAttribute);
-                }
+                sortedDataset = linkedListData_to_List(Data.sortDataSetByValuesOfAttribut(indexAtt));
+                discretizedAttribute = DataProcessor.discretisation_effectifs(k, transposer(sortedDataset).get(indexAtt));
+                AttributeList.set(indexAtt, discretizedAttribute);
             }
             else{
-                for (int i=0; i< Data.unsortedAttributes.size();i++)
-                {
-                    if(Data.attribute_type.get(i) == 0) {
-                        discretizedAttribute = DataProcessor.discretisation_amplitude(k, Data.unsortedAttributes.get(i));
-                        AttributeList.add(discretizedAttribute);
+                    if(Data.attribute_type.get(indexAtt) == 0) {
+                        discretizedAttribute = DataProcessor.discretisation_amplitude(k, Data.unsortedAttributes.get(indexAtt));
+                        AttributeList.set(indexAtt, discretizedAttribute);
                     }
-                    else AttributeList.add(unsortedAttributes.get(i));
-                }
-
+                    else
+                        AttributeList.set(indexAtt, unsortedAttributes.get(indexAtt));
             }
-                //AttributeList = DataProcessor.discretisation_amplitude(0, Data.attributlist.get(0));
 
             this.AttributeList_disc = AttributeList;
 

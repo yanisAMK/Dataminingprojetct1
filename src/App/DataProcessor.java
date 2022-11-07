@@ -43,13 +43,32 @@ public class DataProcessor {
                 bin.add(attributeList.get(j));
                 moyenne += Float.parseFloat(attributeList.get(j));
             }
+
             //Todo : Verify if Numerical attribute is Int or Float
             moyenne = moyenne / bin.size();
             //Solution temporaire : si la dataset a été normalisé return float Else return Int
             if(normalized)
-                discrettedAttributeList.add(moyenne+"");
+                for(int b=0; b<bin.size();b++)
+                    discrettedAttributeList.add(moyenne+"");
             else
+                for(int b=0; b<bin.size();b++)
+                    discrettedAttributeList.add(Math.ceil(moyenne)+"");
+        }
+
+        //Remplissage des valeurs restantes
+        int i = discrettedAttributeList.size();
+        if(normalized){
+            while(i<attributeList.size()){
+                discrettedAttributeList.add(moyenne+"");
+                i++;
+            }
+
+        }
+        else {
+            while(i<attributeList.size()){
                 discrettedAttributeList.add(Math.ceil(moyenne)+"");
+                i++;
+            }
         }
 
         return discrettedAttributeList ;
@@ -86,7 +105,7 @@ public class DataProcessor {
             for(String val: attributeList){
                 if(! val.equals(" ") && ! val.equals("NaN")){
                     int intVal = (int) Math.ceil(Float.parseFloat(val));
-                    if( intVal >= list_mins.get(i) && intVal <= list_mins.get(i+1).intValue()) {
+                    if( intVal >= list_mins.get(i) && intVal < list_mins.get(i+1).intValue()) {
                         bin.add(intVal);
                         moyenne += Float.parseFloat(val);
                     }
@@ -98,9 +117,11 @@ public class DataProcessor {
             moyenne = moyenne/bin.size();
             //Solution temporaire : si la dataset a été normalisé return float Else return Int
             if(normalized)
-                discretizedAttributeList.add(moyenne+"");
+                for(int b=0; b<bin.size();b++)
+                    discretizedAttributeList.add(moyenne+"");
             else
-                discretizedAttributeList.add(Math.ceil(moyenne)+"");
+                for(int b=0; b<bin.size();b++)
+                    discretizedAttributeList.add(Math.ceil(moyenne)+"");
         }
         return discretizedAttributeList ;
     }
@@ -120,7 +141,7 @@ public class DataProcessor {
         Statistics stats = new Statistics();
         //int index = Data.unsortedAttributes.indexOf(attributeList);
         stats.calculMesuresDispersion(Data.attributlist.get(indexAtt));
-
+        System.out.println(stats.mesures.get("nbOutliers"));
         for (int i = 0; i < attributeList.size(); i++) {
             if( ! attributeList.get(i).equals(" ") && ! attributeList.get(i).equals("NaN") && (( Float.parseFloat(attributeList.get(i)) < Float.parseFloat(stats.mesures.get("lineinf")))||
                     (Float.parseFloat(stats.mesures.get("linesup")) < Float.parseFloat(attributeList.get(i))))){

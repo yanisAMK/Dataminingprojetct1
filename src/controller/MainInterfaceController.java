@@ -849,6 +849,54 @@ public class MainInterfaceController {
         populateTable(unsortedAttributes);
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    /// PART 3
+    @FXML
+    private TextArea frequentItemsArea;
+    @FXML
+    private TextArea rulesArea;
+    @FXML
+    private TextField minConfidence;
+    @FXML
+    private TextField minSupport;
+
+    @FXML
+    void mine(ActionEvent event) {
+
+        if( !minConfidence.getText().isEmpty() && !minSupport.getText().isEmpty()) {
+            
+            float s = Float.parseFloat(minSupport.getText());
+            float c = Float.parseFloat(minConfidence.getText());
+
+            Helpers Helpers = new Helpers();
+
+            Helpers.setSupportMin(s);
+            Helpers.setConfianceMin(c);
+
+            //call Apriori
+            List<String> listAssoc = new ArrayList<>();
+            listAssoc = Helpers.Apriori(s, c, Data.unsortedAttributes, 0);
+
+
+            StringBuilder sb = new StringBuilder();
+
+            for(String a : listAssoc){
+                sb.append(a).append("\n"); //.toString()
+            }
+
+            //frequentItemsArea.setText(sb.toString());
+            rulesArea.setText(sb.toString());
+
+            String freq = "freq";
+            frequentItemsArea.setText(freq);
+
+
+        }
+
+
+        }
+
 }
 
 

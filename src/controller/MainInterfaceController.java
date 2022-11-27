@@ -17,6 +17,7 @@ import src.app.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -857,12 +858,18 @@ public class MainInterfaceController {
     @FXML
     private TextArea rulesArea;
     @FXML
+    private TextArea mesureArea;
+    @FXML
     private TextField minConfidence;
     @FXML
     private TextField minSupport;
 
+
+    //Collection<List<String>> collectionItemsFreq;
+    List<List<String>> listRegles;
     @FXML
     void mine(ActionEvent event) {
+        listRegles = new ArrayList<>();
 
         if( !minConfidence.getText().isEmpty() && !minSupport.getText().isEmpty()) {
             
@@ -877,25 +884,91 @@ public class MainInterfaceController {
             //call Apriori
             List<String> listAssoc = new ArrayList<>();
             listAssoc = Helpers.Apriori(s, c, Data.unsortedAttributes, 0);
+            //listAssoc = Helpers.AprioriAvecLift(0.02f, s, c, Data.unsortedAttributes, 0);
 
 
+            System.out.println("nombre de regles d'associations: " + listAssoc.size());
+            
+            System.out.println(Helpers.L.values());
+
+            Collection<List<String>> collection = Helpers.L.values();
+
+
+            List<String> listfreq = new ArrayList<>();
+            for(List<String> list : collection){
+                listfreq.addAll(list);
+            }
+            System.out.println(listfreq);
+
+
+            System.out.println("\n\n");
+
+            //remplissage rulesArea
+            StringBuilder sb1 = new StringBuilder();
+
+            sb1.append("lift\t\tconfidence").append("\n");
+            for(String regle: listAssoc){
+                List<String> temp = List.of(regle.split("====>"));
+                listRegles.add(temp); //enregister les regles pour l'etape de recomendation
+                sb1.append(Helpers.lift(temp.get(0), temp.get(1)) + "\t\t" + Helpers.confiance(temp.get(0), temp.get(1))).append("\n");
+            }
+
+            mesureArea.setText(sb1.toString());
+
+            System.out.println("\n\n");
+
+            //remplissage rulesArea
             StringBuilder sb = new StringBuilder();
 
+            sb.append("rules").append("\n");
             for(String a : listAssoc){
                 sb.append(a).append("\n"); //.toString()
             }
-
-            //frequentItemsArea.setText(sb.toString());
+            
             rulesArea.setText(sb.toString());
 
-            String freq = "freq";
-            frequentItemsArea.setText(freq);
+            //remplissage freq Area
+
+            sb = new StringBuilder();
+
+            for(String a : listfreq){
+                sb.append(a).append("\n"); //.toString()
+            }
+            
+            frequentItemsArea.setText(sb.toString());
 
 
         }
 
+        }
+
+    @FXML
+    private TextField itemRecomend;
+    @FXML
+    private TextArea recomendArea;
+    @FXML
+    void recomendation(ActionEvent event) {
+        System.out.println("recommendation");
+        if( !itemRecomend.getText().isEmpty() ) {
+            recomendArea.clear();
+            String recom = itemRecomend.getText();
+
+            List<String> items= new ArrayList<>();
+            for ( List<String> regle: listRegles){
+                if (regle.get(0).contains(recom)){
+                    items.add(regle.get(1));
+                }
+            }
+            //retourne une liste d'itemsfrequents contenant la recom
+            System.out.println("les items contenant recom : " + recom);
+            System.out.println(items);
+
+            recomendArea.setText(items.toString());
 
         }
+
+
+    }
 
 }
 

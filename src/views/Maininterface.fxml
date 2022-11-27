@@ -196,7 +196,8 @@
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <TextArea fx:id="rulesArea" layoutX="18.0" layoutY="22.0" prefHeight="275.0" prefWidth="715.0" />
+                                          <TextArea fx:id="rulesArea" layoutX="18.0" layoutY="22.0" prefHeight="275.0" prefWidth="512.0" />
+                                          <TextArea fx:id="mesureArea" layoutX="536.0" layoutY="21.0" prefHeight="276.0" prefWidth="200.0" />
                                        </children>
                                     </AnchorPane>
                               </content>
@@ -219,6 +220,11 @@
                            </font>
                         </Text>
                         <Button layoutX="57.0" layoutY="150.0" mnemonicParsing="false" onAction="#mine" text="Start Mining" />
+                        <TextArea fx:id="recomendArea" layoutX="378.0" layoutY="104.0" prefHeight="83.0" prefWidth="396.0" />
+                        <Label layoutX="378.0" layoutY="33.0" text="Recomendation :" />
+                        <TextField fx:id="itemRecomend" layoutX="414.0" layoutY="63.0" prefHeight="25.0" prefWidth="213.0" />
+                        <Label layoutX="378.0" layoutY="67.0" text="item" />
+                        <Button layoutX="635.0" layoutY="63.0" mnemonicParsing="false" onAction="#recomendation" text="ok" />
                      </children>
                   </AnchorPane>
               </content>
